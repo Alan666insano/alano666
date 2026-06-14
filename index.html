@@ -8,20 +8,35 @@
         * {
             box-sizing: border-box;
         }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ffeef8 0%, #fdf6ec 50%, #e8f5ff 100%);
-            color: #4a3728;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            overflow: hidden; /* Evita barras de desplazamiento por los emojis */
-            position: relative;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+        background-image: url('nugget.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+
+        color: #4a3728;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        text-align: center;
+        overflow: hidden;
+        position: relative;
+        }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: rgba(255,255,255,0.35);
+        backdrop-filter: blur(4px);
+        z-index: 0;
         }
         
         /* Estilos actualizados para el confeti de Emojis */
@@ -47,16 +62,16 @@
         }
 
         .container {
-            max-width: 600px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(217, 83, 79, 0.15);
-            border: 2px solid #f3e1ce;
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(5px);
+        max-width: 600px;
+        width: 100%;
+        background: rgba(255,255,255,0.92);
+        padding: 30px;
+        border-radius: 24px;
+        shadow: 0 15px 35px rgba(0,0,0,0.25);
+        border: 2px solid #f3e1ce;
+        position: relative;
+        z-index: 2;
+        backdrop-filter: blur(8px);
         }
         h1 {
             color: #d9534f;
