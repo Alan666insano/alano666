@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Cumpleaños</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #fdf6ec 50%, #e8f5ff 100%);
+            color: #4a3728;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow: hidden; /* Evita barras de desplazamiento por los emojis */
+            position: relative;
+        }
+        
+        /* Estilos actualizados para el confeti de Emojis */
+        .confetti-emoji {
+            position: absolute;
+            font-size: 1.5rem; /* Tamaño inicial de los emojis */
+            user-select: none; /* Evita que se seleccione el texto */
+            pointer-events: none; /* Evita que interfieran con los clics */
+            animation: emoji-fall linear infinite;
+            z-index: 0;
+            top: -50px; /* Empiezan justo fuera de la pantalla */
+        }
+
+        @keyframes emoji-fall {
+            0% { 
+                transform: translateY(0) translateX(0) rotate(0deg); 
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(110vh) translateX(50px) rotate(360deg); 
+                opacity: 0.2; /* Se desvanecen un poco al caer */
+            }
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(217, 83, 79, 0.15);
+            border: 2px solid #f3e1ce;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(5px);
+        }
+        h1 {
+            color: #d9534f;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .img-container {
+            margin: 20px 0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            border: 6px solid #fff;
+            transition: transform 0.3s ease;
+        }
+        
+        .playing img {
+            animation: pulse-beat 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse-beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03) rotate(1deg); }
+        }
+
+        .audio-player {
+            margin: 25px 0;
+            width: 100%;
+        }
+        audio {
+            width: 100%;
+            outline: none;
+            border-radius: 30px;
+        }
+        .lyrics-box {
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            padding: 25px;
+            background-color: #fffaf4;
+            border-radius: 16px;
+            border-left: 6px solid #ffb03b;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+        }
+        
+        .lyrics-container {
+            width: 100%;
+        }
+
+        .verse {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            font-weight: 600;
+            color: #b09e90;
+            white-space: pre-line;
+            display: none;
+            transition: color 0.3s ease;
+        }
+        
+        .verse.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .line {
+            display: block;
+            transition: color 0.3s ease, transform 0.3s ease, filter 0.3s ease;
+            filter: blur(0.5px);
+            opacity: 0.6;
+        }
+
+        .line.highlight {
+            color: #d9534f;
+            opacity: 1;
+            filter: blur(0);
+            transform: scale(1.03);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .hint {
+            font-size: 0.95rem;
+            color: #8a7360;
+            margin-top: 15px;
+            font-style: italic;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="main-container">
+    <h1>Feliz Cumpleaños gai jejeje 🎂</h1>
+    
+    <div class="img-container">
+        <!-- Asegúrate de tener la imagen 'felizcumple.jpg' en la misma carpeta -->
+        <img src="felizcumple.jpg" alt="Feliz Cumpleaños">
+    </div>
+
+    <div class="audio-player">
+        <!-- Asegúrate de tener el audio 'cumple.mp3' en la misma carpeta -->
+        <audio id="bg-music" controls>
+            <source src="cumple.mp3" type="audio/mp3">
+            Tu navegador no soporta el elemento de audio.
+        </audio>
+    </div>
+
+    <div class="lyrics-box">
+        <div class="lyrics-container">
+            <div class="verse active" id="verse-0">
+                <span class="line highlight">Presiona play we 🎵</span>
+            </div>
+            
+            <div class="verse" id="verse-1">
+                <span class="line" data-time="9.0">ESTAS SON LAS MAÑANITAS</span>
+                <span class="line" data-time="12">QUE CANTABA EL REY DAVID</span>
+                <span class="line" data-time="13.5">HOY POR SER DIA DE TU SANTO</span>
+                <span class="line" data-time="16.2">TE LAS CANTAMOS AQUÍ.</span>
+            </div>
+
+            <div class="verse" id="verse-2">
+                <span class="line" data-time="19.5">DESPIERTA MI BIEN DESPIERTA</span>
+                <span class="line" data-time="22.0">MIRA QUE YA AMANECIÓ,</span>
+                <span class="line" data-time="24.0">YA LOS PAJARILLOS CANTAN</span>
+                <span class="line" data-time="27.0">LA LUNA YA SE METIÓ.</span>
+            </div>
+
+            <div class="verse" id="verse-3">
+                <span class="line" data-time="32.0">QUE LINDA ESTÁ LA MAÑANA</span>
+                <span class="line" data-time="36.5">EN QUE VENGO A SALUDARTE</span>
+                <span class="line" data-time="42.0">VENIMOS TODOS CON GUSTO</span>
+                <span class="line" data-time="46.0">Y PLACER A FELICITARTE.</span>
+            </div>
+
+            <div class="verse" id="verse-4">
+                <span class="line" data-time="51.5">EL DÍA EN QUE TU NACISTE</span>
+                <span class="line" data-time="54.8">NACIERON TODAS LAS FLORES</span>
+                <span class="line" data-time="61.1">Y EN LA PILA DEL BAUTISMO</span>
+                <span class="line" data-time="64.2">CANTARON LOS RUISEÑORES.</span>
+            </div>
+
+            <div class="verse" id="verse-5">
+                <span class="line" data-time="71.6">YA VIENE AMANECIENDO</span>
+                <span class="line" data-time="73.7">YA LA LUZ DEL DÍA NOS DIO</span>
+                <span class="line" data-time="78.0">LEVÁNTATE DE MAÑANA</span>
+                <span class="line" data-time="81.0">MIRA QUE YA AMANECIÓ.</span>
+            </div>
+
+            <div class="verse" id="verse-6">
+                <span class="line" data-time="92.0">VOLARON CUATRO PALOMAS</span>
+                <span class="line" data-time="96.5">POR TODITAS LAS CIUDADES</span>
+                <span class="line" data-time="102.0">HOY POR SER DIA DE TU SANTO</span>
+                <span class="line" data-time="105.0">TE DESEAMOS FELICIDADES ✨</span>
+            </div>
+
+            <div class="verse" id="verse-7">
+                <span class="line" data-time="110.0">DE LAS ESTRELLAS DEL CIELO</span>
+                <span class="line" data-time="115.0">TENGO QUE BAJARTE DOS</span>
+                <span class="line" data-time="120.0">UNA ES PARA SALUDARTE</span>
+                <span class="line" data-time="124.0">LA OTRA ES PARA DECIRTE ADIOS.</span>
+            </div>
+
+            <div class="verse" id="verse-8">
+                <span class="line" data-time="131.0">CON JAZMINES Y FLORES</span>
+                <span class="line" data-time="135.0">HOY TE VENGO A SALUDAR</span>
+                <span class="line" data-time="138.0">HOY POR SER DIA DE TU SANTO</span>
+                <span class="line" data-time="140.0">TE VENIMOS A CANTAR.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const audio = document.getElementById('bg-music');
+    const container = document.getElementById('main-container');
+    
+    const verseTimestamps = [
+        { time: 0, id: 'verse-0' },
+        { time: 9, id: 'verse-1' },   
+        { time: 20, id: 'verse-2' },  
+        { time: 32, id: 'verse-3' },  
+        { time: 50, id: 'verse-4' },  
+        { time: 69, id: 'verse-5' },  
+        { time: 92, id: 'verse-6' },  
+        { time: 110, id: 'verse-7' }, 
+        { time: 130, id: 'verse-8' }  
+    ];
+
+    audio.addEventListener('timeupdate', () => {
+        const currentTime = audio.currentTime;
+        
+        let activeVerseId = 'verse-0';
+        for (let i = 0; i < verseTimestamps.length; i++) {
+            if (currentTime >= verseTimestamps[i].time) {
+                activeVerseId = verseTimestamps[i].id;
+            } else {
+                break;
+            }
+        }
+
+        const currentActiveVerse = document.querySelector('.verse.active');
+        if (currentActiveVerse && currentActiveVerse.id !== activeVerseId) {
+            currentActiveVerse.classList.remove('active');
+            document.getElementById(activeVerseId).classList.add('active');
+        }
+
+        const lines = document.querySelectorAll('.verse.active .line');
+        let currentActiveLine = null;
+
+        lines.forEach(line => {
+            const lineTime = parseFloat(line.getAttribute('data-time'));
+            if (currentTime >= lineTime) {
+                currentActiveLine = line;
+            }
+        });
+
+        lines.forEach(line => {
+            if (line === currentActiveLine) {
+                line.classList.add('highlight');
+            } else {
+                line.classList.remove('highlight');
+            }
+        });
+        
+        if (lines.length > 0 && !currentActiveLine) {
+            lines[0].classList.add('highlight');
+        }
+    });
+
+    audio.addEventListener('play', () => {
+        container.classList.add('playing');
+    });
+
+    audio.addEventListener('pause', () => {
+        container.classList.remove('playing');
+    });
+
+    // Función modificada para crear confeti de Emojis
+    function createEmojiConfetti() {
+        // Array con los emojis de fiesta que quieres usar
+        const partyEmojis = ['🎉', '🥳', '🎁', '🎂', '✨', '🎈', '👯', '🍾'];
+        const numEmojis = 50; // Cantidad de emojis
+
+        for (let i = 0; i < numEmojis; i++) {
+            const emojiSpan = document.createElement('span');
+            emojiSpan.classList.add('confetti-emoji');
+            
+            // Selecciona un emoji aleatorio del array
+            emojiSpan.innerText = partyEmojis[Math.floor(Math.random() * partyEmojis.length)];
+            
+            // Posición horizontal aleatoria (0 a 100vw)
+            emojiSpan.style.left = Math.random() * 100 + 'vw';
+            
+            // Retraso de animación aleatorio para que no caigan todos a la vez (0 a 6s)
+            emojiSpan.style.animationDelay = Math.random() * 6 + 's';
+            
+            // Duración de la caída aleatoria para mayor realismo (3 a 6s)
+            emojiSpan.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            
+            // Tamaño aleatorio para los emojis (1rem a 2.5rem)
+            emojiSpan.style.fontSize = (Math.random() * 1.5 + 1) + 'rem';
+
+            document.body.appendChild(emojiSpan);
+        }
+    }
+    
+    // Ejecuta la función al cargar la página
+    createEmojiConfetti();
+</script>
+
+</body>
+</html>
